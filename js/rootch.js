@@ -28,6 +28,7 @@ $(document).ready(function()
 	$('.toon').css('opacity',1);
 
 	// Vul de titel automatisch in op basis van de bestandsnaam zodat die niet telkens per presentatie manueel moet worden ingevuld
+	/*
 	var url = window.location.pathname;
 
 	var titel = url.substring(url.lastIndexOf('/')+1);
@@ -46,6 +47,10 @@ $(document).ready(function()
 
 	//verander de nummer op de achtergrond van de eerste slide op deze manier omdat er met een :before wordt gewerkt in de .css
 	$('body > div > div:first-child').attr('data-content',nummer)
+
+
+	*/
+
 
 	
 	//bewaar het aantal slides
