@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="nl"> 
+	<head>  
+		<meta charset="UTF-8" /> 
+		<meta name="author" content="Stef Bastiaansen" />
+		 
+		<title>.</title> 
+
+		<script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
+		<script type="text/javascript" src="js/jquery.mousewheel.js"></script>
+		<script type="text/javascript" src="js/rootch.js"></script>
+
+		<link href='http://fonts.googleapis.com/css?family=Roboto:300,300italic,500,500italic|Roboto+Slab:700|Share+Tech+Mono|Amatic+SC:400,700' rel='stylesheet' type='text/css'>
+		<link href="css/rootch.css" rel="stylesheet" type="text/css" />
+
+		<link href="media/favicon.png" rel="shortcut icon" type="image/png" />
+
+	</head>	 
+	<body> 
+ 
+		<div>
+			<div>
+				<h1>WEB</h1>
+				<h2></h2>
+				<a class="copyright" href="mailto:bastiaansens@visocloud.org">Stef Bastiaansen &copy; 2014</a>
+			</div>
+
+
+			<div class="scale06">
+				<h3>Knutselen</h3>
+				<ul>
+					<li>We hebben nu (bijna) alle bouwstenen gezien om de front-end van een website te maken
+						<ul>
+							<li>display</li>							
+							<li>width/height</li>
+							<li>margin/padding</li>
+							<li>float</li>
+							<li>position</li>
+							<li>tables</li>
+							<li>nesting</li>
+						</ul>
+					</li>
+					<li>Wélke bouwstenen gebruik je nu wáár?</li>
+					<li>Op de volgende slides staan enkele tips, do's en don'ts ... die je kunnen helpen
+						<ul>
+							<li><strong>Onthoud wel:</strong> Uitzonderingen bestaan altijd, en voor elk probleem bestaan waarschijnlijk meerdere oplossingen</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			
+			<div class="scale06">
+				<h3>display</h3>
+				<ul>
+					<li><strong>display:block;</strong>
+						<ul>
+							<li>Voor elementen die een width, height, padding of margin nodig hebben maar standaard 'inline' zijn (a, label ...)</li>
+							<li>Heeft standaard 'width:auto;'</li>
+						</ul>
+					</li>
+					<li><strong>display:inline;</strong>
+						<ul>
+							<li>Voor elementen binnen een tekstregel</li>
+							<li>Gebruik je zelden omdat die elementen (strong, a, em, span) standaard al <em>inline</em> zijn</li>
+						</ul>
+					</li>
+					<li><strong>display:none;</strong>
+						<ul>
+							<li>Verberg een element</li>
+						</ul>
+					</li>
+
+					<li>Vermijd andere display-values (inline-block ...). De ondersteuning door oudere browsers is niet erg betrouwbaar</li>
+					<li>Meer info vanaf <a href="WEB_02_Terminologie.html#slide8" target="_blank">slide 8 in les 2</a></li>
+				</ul>
+			</div>			
+		
+			<div class="scale07">
+				<h3>height</h3>
+				<ul>
+					<li>In het ideale geval zorgt de inhoud van een block-element zélf voor de hoogte van dat element</li>
+					<li>Je gebruikt <em>height</em> dus énkel wanneer dat dat niet het geval is
+						<ul>
+							<li>Bv. Blokjes die naast elkaar staan en die dezelfde hoogte moeten hebben, maar een variabele inhoud hebben</li>
+							<li>height:100%; voor een element dat over de hele pagina moet staan.
+								<ul>
+									<li>Een procentuele height werkt énkel wanneer het parent-element ook een ingestelde height heeft</li>
+									<li>Je moet hier dus ook body en html height 100% geven.</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li>Meer info vanaf <a href="http://slides.local/WEB_04_Box_Model.html#slide1" target="_blank">slide 2 in les 4</a></li>
+				</ul>
+			</div>			
+		
+			<div class="scale07">
+				<h3>width</h3>
+				<ul>
+					<li>Een block-element heeft standaard 'width:auto;'
+						<ul>
+							<li><strong>inclusief</strong> borders, paddings en margins wordt de volledige breedte van het parent-element wordt ingenomen </li>
+						</ul>
+					</li>
+					<li><strong>Let op:</strong> Wanneer je een block-element 'width:100%' geeft
+						<ul>
+							<li>wordt <strong>exclusief</strong> borders, paddings en margins, de volledige breedte van het parent-element ingenomen </li>
+							<li>Het element komt dan dus buiten het parent-element</li>
+						</ul>
+					</li>
+
+					<li>Meer info vanaf <a href="http://slides.local/WEB_04_Box_Model.html#slide1" target="_blank">slide 2 in les 4</a></li>
+				</ul>
+			</div>
+			
+			<div class="scale07">
+				<h3>max-width, min-width, max-height ...</h3>
+				<ul>
+					<li>Werken maar wanneer de width of height variabel is
+						<ul>
+							<li>bv. wanneer de width of height opgegeven is in procenten</li>
+						</ul>
+					</li>
+					<li>Vooral te gebruiken om layoutprobleempjes als te lange tekstregels op te lossen</li>
+					<li>Meer info vanaf <a href="http://slides.local/WEB_04_Box_Model.html#slide1" target="_blank">slide 5 in les 6</a></li>
+				</ul>
+			</div>	
+		
+		
+			<div class="scale08">
+				<h3>padding</h3>
+				<ul>
+					<li>Creëer (een beetje) afstand tussen de inhoud van een element en de border</li>
+					<li>Gebruik dit <strong>niet</strong> om elementen te positioneren in een paginastructuur
+						<ul>
+							<li>Padding's van +500px = knoeiwerk</li>
+						</ul>
+					</li>
+					
+					<li>Meer info vanaf <a href="WEB_04_Box_Model.html#slide4" target="_blank">slide 5 in les 4</a></li>
+				</ul>
+			</div>			
+		
+			<div class="scale07">
+				<h3>margin</h3>
+				<ul>
+					<li>Creëer (een beetje) afstand tussen de borders van twee elementen</li>
+					<li>Gebruik dit <strong>niet</strong> om elementen te positioneren in een paginastructuur
+						<ul>
+							<li>Margin's van +500px = knoeiwerk</li>
+						</ul>
+					</li>
+					<li>Margin:auto;
+						<ul>
+							<li>Werkt enkel wanneer het element een opgegeven width heeft</li>
+							<li>Zorgt ervoor dat het element horizontaal in het midden van de parent staat</li>
+						</ul>
+					</li>
+					<li><strong>Tip:</strong> In sommige gevallen lopen margins buiten het parent element. Padding gebruiken lost dat probleem meestal op</li>
+					
+					<li>Meer info vanaf <a href="WEB_04_Box_Model.html#slide5" target="_blank">slide 6 in les 4</a></li>
+				</ul>
+			</div>			
+
+		
+			
+			<div class="scale07">
+				<h3>float/clear</h3>
+				<ul>
+					<li>Positioneer block-elementen <strong>naast</strong> elkaar
+						<ul>
+							<li>Of laat tekst rond een element lopen</li>						
+						</ul>
+					</li>
+					<li>De beste, meest flexibele manier om pagina's te layouten</li>
+					<li>Een veel voorkomend 'probleem' is dat een parent-element floatende elementen niet lijkt te zien. Mogelijke oplossingen
+						<ul>
+							<li>overflow:auto; op het parent element</li>
+							<li>het parent element zelf laten floaten</li>
+							<li>'clearfix' op het parent-element</li>
+						</ul>
+					</li>
+					<li>Meer info vanaf <a href="http://slides.local/WEB_04_Box_Model.html#slide8" target="_blank">slide 9 in les 4</a></li>
+				</ul>
+			</div>	
+
+			<div class="scale09">
+				<h3>position</h3>
+				<ul>
+					<li>Te gebruiken wanneer je elementen <strong>boven/onder</strong> elkaar wil zetten</li>
+					<li>Kan ook gebruikt worden voor hele paginastructuren maar gebruik dan liever <em>float</em></li>
+					<li>Meer info in <a href="http://slides.local/WEB_05_Position.html" target="_blank">les 5</a></li>
+				</ul>
+			</div>	
+
+			<div class="scale09">
+				<h3>tables</h3>
+				<ul>
+					<li>Gebruik de table-tag énkel om gegevens/data in een tabel weer te geven</li>
+					<li>Daarvoor dient de table-tag</li>
+				</ul>
+			</div>	
+
+			<div class="scale08">
+				<h3>afbeeldingen</h3>
+				<ul>
+					<li><strong>img-tag</strong>: afbeeldingen die op zichzelf, bijvoorbeeld in een tekst staan
+					<li><strong>background-image</strong>: afbeeldingen die achter een tekst of andere elementen staan</li>
+					<li><strong>Maar!</strong>
+						<ul>
+							<li>Soms kan het interessanter zijn om een div met een background-image te gebruiken dan een img-tag ...</li>
+						</ul>
+					</li>
+					<li><strong>Supertip: </strong> Geef je een afbeelding enkel een width (middels css, of als html-attribuut) dan schaalt de height proportioneel mee.</li> 
+				</ul>
+			</div>	
+			
+			<div class="scale08">
+				<h3>nesting</h3>
+				<ul>
+					<li>Wees zuinig met het aantal html-niveau's, maar niet té zuinig. Soms is een extra niveau nodig of gewoon gemakkelijker</li>
+					<li>Aarzel niet om je ontwerp eerst onder te verdelen in enkele hoofdblokken en dan telkens op te splitsen per onderdeling</li>
+					<li><strong>MEGATIP:</strong> Inspringen, inspringen, inspringen ...</li>
+				</ul>
+			</div>	
+
+			
+			<div class="scale09">
+				<h3>MEGATIP</h3>
+				<ul>
+					<li>Bedenk eerst, desnoods met een blad papier erbij, hoé je het in grote lijnen gaat coderen</li>
+					<li>Begin pas dán te coderen</li>
+				</ul>
+			</div>	
+
+
+			<div class="scale06">
+				<h3>Oefening 18</h3>
+				<ul>
+					<li>Op de volgende slides vind je telkens screenshot en een filmpje waarin een layoutstructuur wordt getoond, en hoe deze reageert op het herschalen van het browservenster
+						<ul>
+							<li>Ingeval van traag internet, de filmpjes staan ook op de server</li>
+						</ul>
+					</li>
+					<li>Bedoeling is dat je deze oefeningen zo goed mogelijk, ingesprongen en valid namaakt door de voorgaande bouwstenen te combineren</li>
+					<li>Maak een map <strong>K_WEB_StybarZ_18</strong> en maak daar per oefening een mapje
+						<ul>
+							<li>OefA</li>
+							<li>OefB</li>
+							<li>...</li>
+						</ul>
+					</li>
+					<li>Voor deze oefeningen heb je een tekst en afbeeldingen nodig. Die vind je <a href="18/content.zip" target="_blank">hier</a></li>
+				</ul>
+			</div>	
+			
+			<div class="scale06">
+				<h3>Oefening 18 - A</h3>
+				<ul>
+					<li class="toon"><a href="18/oefA.png" target="_blank">Screenshot</a></li>
+				</ul>
+				<iframe width="100%" height="600" src="http://www.youtube.com/embed/5DywCw_oYho" allowfullscreen></iframe>						
+			</div>	
+			
+
+			<div class="scale06">
+				<h3>Oefening 18 - B</h3>
+				<ul>
+					<li class="toon"><a href="18/oefB.png" target="_blank">Screenshot</a></li>
+				</ul>
+				<iframe width="100%" height="600" src="http://www.youtube.com/embed/0_2o5Oonq1I" allowfullscreen></iframe>						
+			</div>	
+			
+			<div class="scale06">
+				<h3>Oefening 18 - C</h3>
+				<ul>
+					<li class="toon"><a href="18/oefC.png" target="_blank">Screenshot</a></li>
+				</ul>
+				<iframe width="100%" height="600" src="http://www.youtube.com/embed/gdiV5z-zkHM" allowfullscreen></iframe>						
+			</div>
+			
+				<div class="scale06">
+				<h3>Oefening 18 - D</h3>
+				<ul>
+					<li class="toon"><a href="18/oefD.png" target="_blank">Screenshot</a></li>
+				</ul>
+				<iframe width="100%" height="600" src="http://www.youtube.com/embed/bRrcWoiM4pY" allowfullscreen></iframe>						
+			</div>
+			
+				<div class="scale06">
+				<h3>Oefening 18 - E</h3>
+				<ul>
+					<li class="toon"><a href="18/oefE.png" target="_blank">Screenshot</a></li>
+				</ul>
+				<iframe width="100%" height="600" src="http://www.youtube.com/embed/w_88K_INFQw" allowfullscreen></iframe>						
+			</div>
+			
+			<div class="scale06">
+				<h3>Oefening 18 - F</h3>
+				<ul>
+					<li class="toon"><a href="18/oefF.png" target="_blank">Screenshot</a></li>
+				</ul>
+				<iframe width="100%" height="600" src="http://www.youtube.com/embed/pJECzImwtJo" allowfullscreen></iframe>						
+			</div>
+			
+
+			<div class="scale07">
+				<h3>Indienen oefening 18</h3>
+				<ul>
+					<li>Een map met de naam <strong>K_WEB_StybarZ_18</strong> met daarin mapjes per oefening</li>
+					<li>Einde van de les, wat je afhebt</li>
+					<li>Ben je nog niet klaar, dan werk je de oefeningen ook af tegen volgende les omdat deze zullen dienen als basis voor <strong>Oefening 19</strong></li>
+				</ul>
+			</div>
+
+
+		
+		</div>
+	</body>
+</html>
