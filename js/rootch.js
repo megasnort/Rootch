@@ -243,7 +243,7 @@ function resize()
 	$('body > div > div').height($(window).height());
 
 	//doordat alle andere fontgroottes in "em" zijn gedrukt volstaat het om enkel de font-grootte van de body aan te passen.
-	$('body').css('font-size',$(window).height()/15 + 'px');
+	$('body').css('font-size',$(window).height()/16 + 'px');
 	
 	//beweeg naar de huidige slide
 	beweeg();

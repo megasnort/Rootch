@@ -69,8 +69,8 @@ table {
 
 
 /*
-	P0w0r-. v0.3
-	Stef B. © 2013
+	Rootch - v0.1
+	Megasnort © 2014
 */ 
  
 html
@@ -294,6 +294,7 @@ div > ul > li
 }
 
 
+/* Use these classes to make a slide, a list, an image ... bigger or smaller */
 .scale20
 {
 	font-size:				2em;
