@@ -73,6 +73,11 @@ table {
 	Megasnort © 2014
 */ 
  
+*
+{
+	transition: opacity 0.2s;
+}
+
 html
 {
 	height:		 			100%;
@@ -87,7 +92,6 @@ body
 	text-shadow:			0 0 0.15em rgba(255,255,255,0.3);
 	font-size:				1em;
 	
-	/* http://www.colorzilla.com/gradient-editor/ */
 	background:				#f8f8f8;
 	background:				-moz-radial-gradient(center, ellipse cover,  #f8f8f8 0%, #a2a2a2 100%);
 	background:				-webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#f8f8f8), color-stop(100%,#a2a2a2));
@@ -102,6 +106,7 @@ body
 body > div
 {
 	position:				relative;
+	transition: 			left 0.25s;
 }
 
 

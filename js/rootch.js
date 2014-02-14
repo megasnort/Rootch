@@ -4,11 +4,11 @@
 */
 
 // Bewaar welke slide open staat, en welk element het laatste werd zichtbaar gemaakt.
-var huidigeSlide = 0;
-var huidigElement = 0;
+var currentSlide = 0;
+var currentElement = 0;
 
 // Bewaar het aantal slides in een variabele.
-var aantalSlides = 0;
+var slidesCount = 0;
 
 // Elementen die standaard onzichtbaar moeten zijn.
 var elementen = 'li,pre,img,.verberg,code';
@@ -27,66 +27,46 @@ $(document).ready(function()
 	$(elementen).css('opacity',0);
 	$('.toon').css('opacity',1);
 
-	// Vul de titel automatisch in op basis van de bestandsnaam zodat die niet telkens per presentatie manueel moet worden ingevuld
-	/*
-	var url = window.location.pathname;
-
-	var titel = url.substring(url.lastIndexOf('/')+1);
-
-	var vak = titel.substring(0,titel.indexOf('_'));	
-	
-	var nummer = titel.substring(vak.length+1,vak.length+3);	
-	
-	titel = titel.substring(vak.length + nummer.length + 2);
-	titel = titel.substring(0,titel.lastIndexOf('.'))
-	titel = titel.replace(/_/gi, " ");
-
-	document.title = vak + ' - ' + nummer + ' - ' + titel;
-	
-	$('body > div > div > h2').empty().append(titel);
-
-	//verander de nummer op de achtergrond van de eerste slide op deze manier omdat er met een :before wordt gewerkt in de .css
-	$('body > div > div:first-child').attr('data-content',nummer)
-
-
-	*/
-
-
-	
 	//bewaar het aantal slides
-	aantalSlides = $('body > div > div').length;
+	slidesCount = $('body > div > div').length;
 
 
 	//als er een hash wordt meegegeven wordt de slidenummer hier uitgehaald	
-	var startslide = window.location.hash;
+	var startSlide = parseInt(window.location.hash.substring(6));
 
-	if(startslide.length > 0)
+	if(startSlide > 0)
 	{
-		huidigeSlide = startslide.substring(6);
+		currentSlide = startSlide;
+
+		//walk all slides before the currentSlide and make alle elemets visible
+		var i = 0;
+
+		$('body > div > div').each(function()
+		{
+			if(i < currentSlide)
+			{
+				$(this).find(elementen).css('opacity','1');	
+			}
+			else
+			{
+				return false;
+			}
+			i++;
+		});
 	}	
 	
-	//overloop alle slide-divs.
-	//van elke slide die voor de huidige slide komt worden alle elementen al zichtbaar gezet
-	var i = 0;
-
-	$('body > div > div').each(function()
+	
+	
+	
+	// Delay the initial resizing of the slides,
+	// because the calculation of the total width of the slideshow is off a little bit when resizing immediately.
+	interval = setInterval(function()
 	{
-		if(i < huidigeSlide)
-		{
-			$(this).find(elementen).css('opacity','1');	
-		}
-		else
-		{
-			return false;
-		}
-		i++;
-	});
+		resize();
+		clearInterval(interval);
+	},50);
 	
-	
-	// zorg voor een korte delay vooralleer de slides worden geresized
-	interval = setInterval(initResize,50);
-	
-	//resize();
+
 	$(window).resize(resize);
 	
 
@@ -95,156 +75,118 @@ $(document).ready(function()
 	{		
 		if(delta > 0)
 		{
-			gaEenTerug();
+			moveBack();
 		}
 		else
 		{
-			gaEenVerder();
+			moveForward();
 		}	
 	});
 
 
-	//als er toetsen worden ingedrukt kan er ook genavigeer worden
 	$(document).keydown(function(e)
 	{
-		//console.log(e.keyCode)
-		
-		//bij het pijltje naar links
+		//LEFT
 		if (e.keyCode == 37)
 		{
-			gaEenTerug();
+			moveBack();
 			return false;
 		}
-		//bij spatie of het pijltje naar rechts
+		//RIGHT or SPACE
 		else if (e.keyCode == 39 || e.keyCode == 32)
 		{
-			gaEenVerder();
+			moveForward();
 			return false;	
 		}
-		//bij druk op "h", ga naar slide 1
+		// (H)ome of the presentation
 		else if (e.keyCode == 72)
 		{
-			huidigeSlide = 0;
-			beweeg();
+			currentSlide = 0;
+			move();
 			return false;
 		}
-		//bij druk op "e", ga naar de laatste slide
+		// (E)nd of the presentation
 		else if (e.keyCode == 69)
 		{
-			huidigeSlide = aantalSlides - 1;
-			beweeg();
+			currentSlide = slidesCount - 1;
+			move();
 			return false;
 		}
-		// toon alles, zodat je sneller doorheen de presentatie kan scrollen
+		// (S)how all
 		else if (e.keyCode == 83)
 		{
 			$(elementen).css('opacity',1);
 			return false;
 		}
-		//vang het pijltje naar boven en onder op, maar doe er niets mee (anders beweegt het scherm)
+		//Catch UP and DOWN, otherwise everything sometimes moves
 		else if (e.keyCode == 38 || e.keyCode == 40)
 		{
 			return false;
 		}
-		//toon alles
 	});
 
 	
 
 });
 
-//omdat er soms wat foutloopt bij het inladen van alle slides wordt er even gewacht vooralleer de resize wordt uitgevoerd.
-function initResize()
-{
-	resize();
-	clearInterval(interval);
-}
+
 
 //teruggaan is steeds gelijk aan de vorige slide
-function gaEenTerug()
+function moveBack()
 {
-	if(huidigeSlide > 0)
+	if(currentSlide > 0)
 	{
-		huidigeSlide--;
-		beweeg();
+		currentSlide--;
+		move();
 	}
 }
 
 
-function gaEenVerder()
+function moveForward()
 {
-	huidigElement = 0;
+	currentElement = 0;
 	
-	//zoek het eerst volgende onzichtbare element
-	while(huidigElement < aantalElementen && $('body > div').children('div').eq(huidigeSlide).find(elementen).eq(huidigElement).css("opacity") == 1)
+	//find next invisible element
+	while(currentElement < elementsCount && $('body > div').children('div').eq(currentSlide).find(elementen).eq(currentElement).css("opacity") == 1)
 	{
-		huidigElement++;
+		currentElement++;
 	}
 
-	//als alle elementen op de huidige slide zichtbaar zijn, ga dan naar de volgende slide	
-	if(huidigElement == aantalElementen && huidigeSlide < aantalSlides - 1)
+	//when no invisible elements left, move to next Slide
+	if(currentElement == elementsCount && currentSlide < slidesCount - 1)
 	{
-		huidigeSlide++;
-		beweeg();				
+		currentSlide++;
+		move();				
 	}
-	//anders zet je het eerst volgende onzichtbare item zichtbaar
+	//make next element visible
 	else
 	{
-		$('body > div').children('div').eq(huidigeSlide).find(elementen).eq(huidigElement).animate({'opacity':'1'},fadeSnelheid);
-		huidigElement++;
+		$('body > div').children('div').eq(currentSlide).find(elementen).eq(currentElement).css('opacity','1');
+		currentElement++;
 	}
 
 }
 
 
-function beweegNaar(slide)
+function move()
 {
-	// zorg dat slide zeker een getal is (komt soms uit een cookie, vandaar)
-	slide = parseInt(slide);
-
-	//als het een geldige slidnr is, dan mag er geschoven worden
-	if(slide > -1 && slide < aantalSlides)
-	{
-		
-		huidigeSlide = slide;
-		beweeg();
-	}
-
-}
-
-
-function beweeg()
-{
-	//sla het aantal te tonen elementen op van de nieuwe slide
-	aantalElementen = $('body > div').children('div').eq(huidigeSlide).find(elementen).length;
+	elementsCount = $('body > div').children('div').eq(currentSlide).find(elementen).length;
 	
-	//verschuif de volledige slideshow op, 
-	$('body > div').stop(false, false).animate(
-		{
-			left: -(huidigeSlide * $(window).width())
-		},
-		beweegSnelheid);
+	$('body > div').css('left', -(currentSlide * $(window).width()));
 
-	// verander de url het browservenster.
-	window.location.href = '#slide' + huidigeSlide;
-	
+	window.location.href = '#slide' + currentSlide;	
 }
 
 
 function resize()
 {
 
-	//zorg dat wanneer het venster vergroot/verkleint, de slides meedoen.
-	$('body > div').width((aantalSlides * $(window).width())+100);
-	//console.log('aantal slides ' + aantalSlides);
-	//console.log('aantal slides ' + $(window).width());
-	$('body > div').css('left',-(huidigeSlide * $(window).width()));
+	$('body > div').width((slidesCount * $(window).width())+100);
+	$('body > div').css('left',-(currentSlide * $(window).width()));
 	$('body > div > div').width($(window).width());
 	$('body > div > div').height($(window).height());
 
-	//doordat alle andere fontgroottes in "em" zijn gedrukt volstaat het om enkel de font-grootte van de body aan te passen.
 	$('body').css('font-size',$(window).height()/16 + 'px');
 	
-	//beweeg naar de huidige slide
-	beweeg();
+	move();
 }
