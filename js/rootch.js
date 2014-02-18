@@ -1,30 +1,23 @@
 /*
-	P0w0r-. v0.3
-	Stef B. © 2013
+	Rootch v0.1
+	Stef B. © 2014
 */
 
-// Bewaar welke slide open staat, en welk element het laatste werd zichtbaar gemaakt.
 var currentSlide = 0;
 var currentElement = 0;
 
-// Bewaar het aantal slides in een variabele.
 var slidesCount = 0;
 
-// Elementen die standaard onzichtbaar moeten zijn.
-var elementen = 'li,pre,img,.verberg,code';
 
-// Snelheid waarmee elementjes infaden.
-var fadeSnelheid = 150;
-var beweegSnelheid = 250
+var hiddenElements = 'li,pre,img,.verberg,code';
 
-var interval;
 
 // Wanneer het volledige document is geladen
 $(document).ready(function()
 { 
 
 	// Wat moet er bij de start verborgen zijn.
-	$(elementen).css('opacity',0);
+	$(hiddenElements).css('opacity',0);
 	$('.toon').css('opacity',1);
 
 	//bewaar het aantal slides
@@ -45,7 +38,7 @@ $(document).ready(function()
 		{
 			if(i < currentSlide)
 			{
-				$(this).find(elementen).css('opacity','1');	
+				$(this).find(hiddenElements).css('opacity','1');	
 			}
 			else
 			{
@@ -60,7 +53,7 @@ $(document).ready(function()
 	
 	// Delay the initial resizing of the slides,
 	// because the calculation of the total width of the slideshow is off a little bit when resizing immediately.
-	interval = setInterval(function()
+	var interval = setInterval(function()
 	{
 		resize();
 		clearInterval(interval);
@@ -115,7 +108,7 @@ $(document).ready(function()
 		// (S)how all
 		else if (e.keyCode == 83)
 		{
-			$(elementen).css('opacity',1);
+			$(hiddenElements).css('opacity',1);
 			return false;
 		}
 		//Catch UP and DOWN, otherwise everything sometimes moves
@@ -125,6 +118,16 @@ $(document).ready(function()
 		}
 	});
 
+	$("body").touchwipe(
+	{
+		wipeLeft: moveBack,
+		wipeRight: moveForward,
+		wipeUp: function() { },
+		wipeDown: function() { },
+		min_move_x: 20,
+		min_move_y: 20,
+		preventDefaultEvents: true
+	});
 	
 
 });
@@ -147,7 +150,7 @@ function moveForward()
 	currentElement = 0;
 	
 	//find next invisible element
-	while(currentElement < elementsCount && $('body > div').children('div').eq(currentSlide).find(elementen).eq(currentElement).css("opacity") == 1)
+	while(currentElement < elementsCount && $('body > div').children('div').eq(currentSlide).find(hiddenElements).eq(currentElement).css("opacity") > 0)
 	{
 		currentElement++;
 	}
@@ -161,7 +164,7 @@ function moveForward()
 	//make next element visible
 	else
 	{
-		$('body > div').children('div').eq(currentSlide).find(elementen).eq(currentElement).css('opacity','1');
+		$('body > div').children('div').eq(currentSlide).find(hiddenElements).eq(currentElement).css('opacity','1');
 		currentElement++;
 	}
 
@@ -170,7 +173,7 @@ function moveForward()
 
 function move()
 {
-	elementsCount = $('body > div').children('div').eq(currentSlide).find(elementen).length;
+	elementsCount = $('body > div').children('div').eq(currentSlide).find(hiddenElements).length;
 	
 	$('body > div').css('left', -(currentSlide * $(window).width()));
 
@@ -186,7 +189,7 @@ function resize()
 	$('body > div > div').width($(window).width());
 	$('body > div > div').height($(window).height());
 
-	$('body').css('font-size',$(window).height()/16 + 'px');
+	$('body').css('font-size', $(window).height() / 16 + 'px');
 	
 	move();
 }
