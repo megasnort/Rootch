@@ -9,6 +9,13 @@ var currentElement = 0;
 var slidesCount = 0;
 
 
+var ctrlFlag = false;
+var commandFlag = false;
+var altFlag = false;
+var shiftFlag = false;
+var ctrlFlag = false;
+
+
 var hiddenElements = 'li,pre,img,.verberg,code';
 
 
@@ -76,43 +83,91 @@ $(document).ready(function()
 		}	
 	});
 
+	$(document).keyup(function(e)
+	{
+		switch(e.keyCode)
+		{
+			//command
+			case 244:
+				ctrlFlag = false;
+				break;
+			// alt
+			case 18:
+				altFlag = false;
+				break;
+			// alt
+			case 17:
+				ctrlFlag = false;
+				break;
+			//shift
+			case 16:
+				shiftFlag = false;
+				break;
+
+		}
+	});
+
 
 	$(document).keydown(function(e)
 	{
+		console.log(e.keyCode);
+		
+
+		switch(e.keyCode)
+		{
+			//command
+			case 244:
+				ctrlFlag = true;
+				break;
+			// alt
+			case 18:
+				altFlag = true;
+				break;
+			// alt
+			case 17:
+				ctrlFlag = true;
+				break;
+			//shift
+			case 16:
+				shiftFlag = true;
+				break;
+
+		}
+
 		//LEFT
-		if (e.keyCode == 37)
+		if (e.keyCode == 37 && noCombo())
 		{
 			moveBack();
 			return false;
 		}
 		//RIGHT or SPACE
-		else if (e.keyCode == 39 || e.keyCode == 32)
+		else if ((e.keyCode == 39 || e.keyCode == 32)  && noCombo())
 		{
 			moveForward();
 			return false;	
 		}
 		// (H)ome of the presentation
-		else if (e.keyCode == 72)
+		else if ((e.keyCode == 72 || e.keyCode == 36)  && noCombo())
 		{
 			currentSlide = 0;
 			move();
 			return false;
 		}
 		// (E)nd of the presentation
-		else if (e.keyCode == 69)
+		else if ((e.keyCode == 69  || e.keyCode == 35) && noCombo())
 		{
 			currentSlide = slidesCount - 1;
 			move();
 			return false;
 		}
 		// (S)how all
-		else if (e.keyCode == 83)
+		else if ((e.keyCode == 83)  && noCombo())
 		{
 			$(hiddenElements).css('opacity',1);
 			return false;
 		}
 		//Catch UP and DOWN, otherwise everything sometimes moves
-		else if (e.keyCode == 38 || e.keyCode == 40)
+		else if ((e.keyCode == 38 || e.keyCode == 40) && noCombo())
 		{
 			return false;
 		}
@@ -170,6 +225,11 @@ function moveForward()
 
 }
 
+
+function noCombo()
+{
+	return (!ctrlFlag && !altFlag && !shiftFlag && !commandFlag);
+}
 
 function move()
 {
