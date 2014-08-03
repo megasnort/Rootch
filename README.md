@@ -1,5 +1,5 @@
 # What?
 
-Rootch is slideshow build with jQuery and CSS3. For a demo visit http://bastiaansen.happyvisocoders.be.
+Rootch is slideshow build with jQuery and CSS3.
 
-I use it as an online Powerpoint/Keynote replacement for the lessons Webdesign and -programming I teach at VISO Mariakerke.
+I used it as an online Powerpoint/Keynote replacement for the lessons Webdesign and -programming I teached at VISO Mariakerke between 2011 en 2014.
